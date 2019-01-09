@@ -21,7 +21,7 @@ float X[20][20], Y[20][20];
 float x[4][27], y[4][27];
 float t;
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     ImportingData();
     ComputePoints();
     glutInit(&argc, argv);
@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
 }
 
 void ImportingData() {
-    FILE *p;
+    FILE* p;
     p = fopen("bezier_fitting.data", "r");
     if (p == NULL) {
         printf("Error");
@@ -218,7 +218,7 @@ void Mouse(int button, int state, int x, int y) {
 }
 
 void WritingData() {
-    FILE *p;
+    FILE* p;
     p = fopen("bezier_fitting.data", "w");
     if (p == NULL) {
         printf("Error");

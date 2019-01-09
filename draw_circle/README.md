@@ -1,4 +1,4 @@
-# Draw a cicle using Midpoint algorithm
+# Draw a circle using Midpoint algorithm
 
 ## Build project
 Build project with cmake:
