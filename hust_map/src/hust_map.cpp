@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string>
 
 #ifdef __linux__
 #include <GL/glut.h>
@@ -31,7 +32,7 @@ float angleXZ = 0;
 float angleY = 0;
 float angleStep = PI / (120 - eyeStep);
 
-GLuint loadTexture(char* fileName, int width, int height);
+GLuint loadTexture(std::string fileName, int width, int height);
 void getTextures(void);
 void initial(void);
 void display(void);
@@ -80,7 +81,7 @@ void rightFrontHandrail(void);
 void edgeHandrail(void);
 void window(void);
 void door(void);
-void room(char* type);
+void room(std::string type);
 void covered(void);
 void backPorchPillars(void);
 
@@ -119,19 +120,21 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-GLuint loadTexture(char* fileName, int width, int height) {
+GLuint loadTexture(std::string fileName, int width, int height) {
     GLuint texTure;
     unsigned char* data;
-    FILE* file = fopen(fileName, "rb");
+    FILE* file = fopen(fileName.c_str(), "rb");
 
     if (file == NULL) {
-        printf("File Not Found : %s.\n", fileName);
+        printf("File Not Found : %s.\n", fileName.c_str());
         return 0;
     }
 
     fseek(file, 54, SEEK_CUR);
     data = (unsigned char*)malloc(width * height * 3);
-    fread(data, width * height * 3, 1, file);
+    if (fread(data, width * height * 3, 1, file) != 1) {
+        printf("Faied to read data.\n");
+    }
     fclose(file);
 
     for (int i = 0; i < width * height; ++i) {
@@ -1188,7 +1191,7 @@ void door(void) {
     glPopMatrix();
 }
 
-void room(char* type) {
+void room(std::string type) {
     glPushMatrix();
     roomFrame();
     glPopMatrix();

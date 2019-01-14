@@ -29,11 +29,17 @@ int main(int argc, char** argv) {
 void importingData() {
     printf("Enter center point's coordinate.\n");
     printf("xC = ");
-    scanf("%d", &xC);
+    if (scanf("%d", &xC) < 1) {
+        printf("Failed to enter xC.\n");
+    }
     printf("yC = ");
-    scanf("%d", &yC);
+    if (scanf("%d", &yC) < 1) {
+        printf("Failed to enter yC.\n");
+    }
     printf("Enter radius R = ");
-    scanf("%f", &R);
+    if (scanf("%f", &R) < 1) {
+        printf("Failed to enter R.\n");
+    }
 }
 
 void initial() {

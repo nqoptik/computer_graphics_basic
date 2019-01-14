@@ -42,10 +42,16 @@ void ImportingData() {
     if (p == NULL) {
         printf("Error");
     } else {
-        fscanf(p, "%d\n", &n);
+        if (fscanf(p, "%d\n", &n) < 1) {
+            printf("Failed to scan n.\n");
+        }
         for (int i = 0; i < n; i++) {
-            fscanf(p, "%f", &X[0][i]);
-            fscanf(p, "%f\n", &Y[0][i]);
+            if (fscanf(p, "%f", &X[0][i]) < 1) {
+                printf("Failed to scan X[0][%d]", i);
+            }
+            if (fscanf(p, "%f\n", &Y[0][i]) < 1) {
+                printf("Failed to scan Y[0][%d]", i);
+            }
         }
         fclose(p);
     }

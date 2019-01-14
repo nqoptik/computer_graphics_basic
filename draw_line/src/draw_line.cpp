@@ -36,13 +36,21 @@ int main(int argc, char** argv) {
 void importingData() {
     printf("Enter A, B's coordinates:\n");
     printf("xA = ");
-    scanf("%d", &xA);
+    if (scanf("%d", &xA) < 1) {
+        printf("Failed to enter xA.\n");
+    }
     printf("yA = ");
-    scanf("%d", &yA);
+    if (scanf("%d", &yA) < 1) {
+        printf("Failed to enter yA.\n");
+    }
     printf("xB = ");
-    scanf("%d", &xB);
+    if (scanf("%d", &xB) < 1) {
+        printf("Failed to enter xB.\n");
+    }
     printf("yB = ");
-    scanf("%d", &yB);
+    if (scanf("%d", &yB) < 1) {
+        printf("Failed to enter yB.\n");
+    }
 
     if (xA > xB) {
         int xC, yC;
@@ -56,7 +64,9 @@ void importingData() {
     printf("Pick one of these following algorithms to draw the line:\n");
     printf("1. DDA algorithm.\n");
     printf("2. Midpoint algorithm.\n");
-    scanf("%d", &check);
+    if (scanf("%d", &check) < 1) {
+        printf("Failed to enter check.\n");
+    }
 }
 
 void initial() {
