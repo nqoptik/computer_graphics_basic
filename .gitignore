@@ -44,3 +44,5 @@
 *.csv
 build/*
 */build/*
+doc/*
+*/doc/*

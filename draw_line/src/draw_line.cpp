@@ -56,7 +56,7 @@ void display();
 /**
  * @brief The timer callback function.
  * 
- * @param[i] n The time in minisecond.
+ * @param[in] ms The time in minisecond.
  * @since 0.0.1
  */
 void timer(int ms);
