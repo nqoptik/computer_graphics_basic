@@ -16,6 +16,10 @@ window = pyglet.window.Window()
 
 def draw_line_equation(x_0, y_0, x_1, y_1):
     """!@brief Draw a line using equation directly.
+    @param[in] x_0 The x-coordiante of the first point.
+    @param[in] y_0 The y-coordiante of the first point.
+    @param[in] x_1 The x-coordiante of the second point.
+    @param[in] y_1 The y-coordiante of the second point.
     @since 0.0.1
     """
 
@@ -49,6 +53,10 @@ def draw_line_equation(x_0, y_0, x_1, y_1):
 
 def draw_line_dda(x_0, y_0, x_1, y_1):
     """!@brief Draw a line using DDA algorithm.
+    @param[in] x_0 The x-coordiante of the first point.
+    @param[in] y_0 The y-coordiante of the first point.
+    @param[in] x_1 The x-coordiante of the second point.
+    @param[in] y_1 The y-coordiante of the second point.
     @since 0.0.1
     """
 
@@ -84,6 +92,10 @@ def draw_line_dda(x_0, y_0, x_1, y_1):
 
 def draw_line_bresenham(x_0, y_0, x_1, y_1):
     """!@brief Draw a line using Bresenham algorithm.
+    @param[in] x_0 The x-coordiante of the first point.
+    @param[in] y_0 The y-coordiante of the first point.
+    @param[in] x_1 The x-coordiante of the second point.
+    @param[in] y_1 The y-coordiante of the second point.
     @since 0.0.1
     """
 
@@ -161,6 +173,13 @@ def on_draw():
         vertices_equation_t = draw_line_equation(y_0, x_0, y_1, x_1)
     end = time.time()
     print("Time do draw " + str(iterations) + " lines using equation directly: " + str(end - begin))
+
+    # Drift the lines 5 pixels right and 5 pixel up to see all algorithms at the same time
+    for i in range(len(vertices_equation)):
+        vertices_equation[i] = vertices_equation[i] + 5
+    for i in range(len(vertices_equation_t)):
+        vertices_equation_t[i] = vertices_equation_t[i] + 5
+
     line_equation = pyglet.graphics.vertex_list(int(len(vertices_equation)/2), ('v2f', vertices_equation))
     line_equation_t = pyglet.graphics.vertex_list(int(len(vertices_equation_t)/2), ('v2f', vertices_equation_t))
     glColor3f(1, 0, 0)
@@ -176,6 +195,13 @@ def on_draw():
         vertices_dda_t = draw_line_dda(y_0, x_0, y_1, x_1)
     end = time.time()
     print("Time do draw " + str(iterations) + " lines using dda algorithm: " + str(end - begin))
+
+    # Drift the lines 10 pixels right and 10 pixel up to see all algorithms at the same time
+    for i in range(len(vertices_dda)):
+        vertices_dda[i] = vertices_dda[i] + 10
+    for i in range(len(vertices_dda_t)):
+        vertices_dda_t[i] = vertices_dda_t[i] + 10
+
     line_dda = pyglet.graphics.vertex_list(int(len(vertices_dda)/2), ('v2f', vertices_dda))
     line_dda_t = pyglet.graphics.vertex_list(int(len(vertices_dda_t)/2), ('v2f', vertices_dda_t))
     glColor3f(0, 1, 0)
@@ -191,6 +217,13 @@ def on_draw():
         vertices_bresenham_t = draw_line_bresenham(y_0, x_0, y_1, x_1)
     end = time.time()
     print("Time do draw " + str(iterations) + " lines using bresenham algorithm: " + str(end - begin))
+
+    # Drift the lines 15 pixels right and 15 pixel up to see all algorithms at the same time
+    for i in range(len(vertices_bresenham)):
+        vertices_bresenham[i] = vertices_bresenham[i] + 15
+    for i in range(len(vertices_bresenham_t)):
+        vertices_bresenham_t[i] = vertices_bresenham_t[i] + 15
+
     line_bresenham = pyglet.graphics.vertex_list(int(len(vertices_bresenham)/2), ('v2f', vertices_bresenham))
     line_bresenham_t = pyglet.graphics.vertex_list(int(len(vertices_bresenham_t)/2), ('v2f', vertices_bresenham_t))
 
