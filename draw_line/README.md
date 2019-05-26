@@ -25,7 +25,7 @@ sudo apt-get install freeglut3-dev
 ```
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake ..
 make
 ```
 
