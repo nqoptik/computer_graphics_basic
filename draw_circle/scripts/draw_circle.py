@@ -9,6 +9,7 @@
 
 import time
 import math
+import numpy as np
 from pyglet.gl import *
 
 window = pyglet.window.Window()
@@ -28,6 +29,25 @@ def draw_circle_sqrt(x_c, y_c, r):
         y = math.floor(math.sqrt(r * r - d_x * d_x) + 0.5)
         vertices += [x, y_c + y]
         vertices += [x, y_c - y]
+
+    return vertices
+
+
+def draw_circle_polar_enhancement(x_c, y_c, r):
+    """!@brief Draw a circle using the polar enhancement method.
+    @param[in] x_c The x-coordiante of the circle centre.
+    @param[in] y_c The y-coordiante of the circle centre.
+    @param[in] r The radius of the circle.
+    @since 0.0.1
+    """
+
+    vertices = []
+    d_theta = 1.0 / r
+    two_pi = 2 * math.pi
+    for theta in np.arange(0, two_pi, d_theta):
+        x = x_c + math.floor(r * math.cos(theta) + 0.5)
+        y = y_c + math.floor(r * math.sin(theta) + 0.5)
+        vertices += [x, y]
 
     return vertices
 
@@ -79,7 +99,7 @@ def on_draw():
     glClear(pyglet.gl.GL_COLOR_BUFFER_BIT)
 
     x_c = 130
-    y_c = 130
+    y_c = 125
     r = 120
     iterations = 1000
 
@@ -94,6 +114,23 @@ def on_draw():
     circle_sqrt = pyglet.graphics.vertex_list(int(len(vertices_sqrt)/2), ('v2f', vertices_sqrt))
     glColor3f(1, 0, 0)
     circle_sqrt.draw(GL_POINTS)
+
+    # Draw circles using the polar enhancement method
+    vertices_polar_enhancement = []
+    begin = time.time()
+    for i in range(iterations):
+        vertices_polar_enhancement = draw_circle_polar_enhancement(x_c, y_c, r)
+    end = time.time()
+    print("Time to draw " + str(iterations) + " circles using the polar enhancement method: " + str(end - begin))
+
+    # Drift the circle 300 pixels right to see all algorithms at the same time
+    for i in range(len(vertices_polar_enhancement)):
+        if i % 2 == 0:
+            vertices_polar_enhancement[i] = vertices_polar_enhancement[i] + 300
+
+    circle_polar_enhancement = pyglet.graphics.vertex_list(int(len(vertices_polar_enhancement)/2), ('v2f', vertices_polar_enhancement))
+    glColor3f(0, 1, 0)
+    circle_polar_enhancement.draw(GL_POINTS)
 
     # Draw circles using the midpoint algorithm
     vertices_midpoint = []
@@ -111,7 +148,7 @@ def on_draw():
             vertices_midpoint[i] = vertices_midpoint[i] + 220
 
     circle_midpoint = pyglet.graphics.vertex_list(int(len(vertices_midpoint)/2), ('v2f', vertices_midpoint))
-    glColor3f(0, 1, 0)
+    glColor3f(0, 0, 1)
     circle_midpoint.draw(GL_POINTS)
 
 

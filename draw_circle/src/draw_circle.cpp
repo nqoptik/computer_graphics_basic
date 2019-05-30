@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <math.h>
 #include <vector>
 #include <sys/time.h>
 #include <GL/glut.h>
@@ -73,6 +74,17 @@ void timer(int ms);
 void draw_circle_sqrt(int x_c, int y_c, int r, std::vector<Point2i>& vertices);
 
 /**
+ * @brief Draw a circle using the polar enhancement method.
+ * 
+ * @param[in] x_c The x-coordiante of the circle centre.
+ * @param[in] y_c The y-coordiante of the circle centre.
+ * @param[in] r The radius of the circle.
+ * @param[out] vertices The list of pixels need to be drawn.
+ * @since 0.0.1
+ */
+void draw_circle_polar_enhancement(int x_c, int y_c, int r, std::vector<Point2i>& vertices);
+
+/**
  * @brief Draw a circle using the midpoint algorithm.
  * 
  * @param[in] x_c The x-coordiante of the circle centre.
@@ -114,7 +126,7 @@ void initial() {
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
     int x_c = 130;
-    int y_c = 130;
+    int y_c = 125;
     int r = 120;
     int iterations = 1000;
 
@@ -133,6 +145,22 @@ void display() {
     }
     glEnd();
 
+    // Draw cirles using the polar enhancement method
+    std::vector<Point2i> vertices_polar_enhancement;
+    for (int i = 0; i < iterations; i++) {
+        draw_circle_polar_enhancement(x_c, y_c, r, vertices_polar_enhancement);
+    }
+
+    // Drift the circle 300 pixels right to see all algorithms at the same time
+    glColor3f(0.0f, 1.0f, 0.0f);
+    glBegin(GL_POINTS);
+    {
+        for (int i = 0; i < vertices_polar_enhancement.size(); i++) {
+            glVertex2d(vertices_polar_enhancement[i].x + 300, vertices_polar_enhancement[i].y);
+        }
+    }
+    glEnd();
+
     // Draw cirles using the midpoint algorithm
     std::vector<Point2i> vertices_midpoint;
     for (int i = 0; i < iterations; i++) {
@@ -140,7 +168,7 @@ void display() {
     }
 
     // Drift the circle 150 pixels right and 220 pixel up to see all algorithms at the same time
-    glColor3f(0.0f, 1.0f, 0.0f);
+    glColor3f(0.0f, 0.0f, 1.0f);
     glBegin(GL_POINTS);
     {
         for (int i = 0; i < vertices_midpoint.size(); i++) {
@@ -164,6 +192,17 @@ void draw_circle_sqrt(int x_c, int y_c, int r, std::vector<Point2i>& vertices) {
         int y = std::round(sqrt(r * r - d_x * d_x));
         vertices.push_back(Point2i(x, y_c + y));
         vertices.push_back(Point2i(x, y_c - y));
+    }
+}
+
+void draw_circle_polar_enhancement(int x_c, int y_c, int r, std::vector<Point2i>& vertices) {
+    vertices.clear();
+    float d_theta = 1.0f / r;
+    float two_pi = 2 * M_PI;
+    for (float theta = 0; theta < two_pi; theta += d_theta) {
+        int x = x_c + std::round(r * cos(theta));
+        int y = y_c + std::round(r * sin(theta));
+        vertices.push_back(Point2i(x, y));
     }
 }
 
