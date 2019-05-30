@@ -14,6 +14,24 @@ from pyglet.gl import *
 window = pyglet.window.Window()
 
 
+def draw_circle_sqrt(x_c, y_c, r):
+    """!@brief Draw a circle using the square root method.
+    @param[in] x_c The x-coordiante of the circle centre.
+    @param[in] y_c The y-coordiante of the circle centre.
+    @param[in] r The radius of the circle.
+    @since 0.0.1
+    """
+
+    vertices = []
+    for x in range(x_c - r, x_c + r):
+        d_x = x_c - x
+        y = math.floor(math.sqrt(r * r - d_x * d_x) + 0.5)
+        vertices += [x, y_c + y]
+        vertices += [x, y_c - y]
+
+    return vertices
+
+
 def draw_circle_midpoint(x_c, y_c, r):
     """!@brief Draw a circle using the midpoint algorithm.
     @param[in] x_c The x-coordiante of the circle centre.
@@ -38,9 +56,9 @@ def draw_circle_midpoint(x_c, y_c, r):
 
     while x < y:
         if p < 0:
-            p = p + 2*x + 3
+            p = p + 2 * x + 3
         else:
-            p = p + 2*x - 2*y + 5
+            p = p + 2 * x - 2 * y + 5
             y = y - 1
 
         x = x + 1
@@ -60,10 +78,22 @@ def draw_circle_midpoint(x_c, y_c, r):
 def on_draw():
     glClear(pyglet.gl.GL_COLOR_BUFFER_BIT)
 
-    x_c = 300
-    y_c = 200
-    r = 150
+    x_c = 130
+    y_c = 130
+    r = 120
     iterations = 1000
+
+    # Draw circles using the square root method
+    vertices_sqrt = []
+    begin = time.time()
+    for i in range(iterations):
+        vertices_sqrt = draw_circle_sqrt(x_c, y_c, r)
+    end = time.time()
+    print("Time to draw " + str(iterations) + " circles using the square root method: " + str(end - begin))
+
+    circle_sqrt = pyglet.graphics.vertex_list(int(len(vertices_sqrt)/2), ('v2f', vertices_sqrt))
+    glColor3f(1, 0, 0)
+    circle_sqrt.draw(GL_POINTS)
 
     # Draw circles using the midpoint algorithm
     vertices_midpoint = []
@@ -73,8 +103,15 @@ def on_draw():
     end = time.time()
     print("Time to draw " + str(iterations) + " circles using the midpoint algorithm: " + str(end - begin))
 
+    # Drift the circle 150 pixels right and 220 pixel up to see all algorithms at the same time
+    for i in range(len(vertices_midpoint)):
+        if i % 2 == 0:
+            vertices_midpoint[i] = vertices_midpoint[i] + 150
+        else:
+            vertices_midpoint[i] = vertices_midpoint[i] + 220
+
     circle_midpoint = pyglet.graphics.vertex_list(int(len(vertices_midpoint)/2), ('v2f', vertices_midpoint))
-    glColor3f(1, 0, 0)
+    glColor3f(0, 1, 0)
     circle_midpoint.draw(GL_POINTS)
 
 
