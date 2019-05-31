@@ -52,6 +52,32 @@ def draw_circle_polar_enhancement(x_c, y_c, r):
     return vertices
 
 
+def draw_circle_polar_speedup(x_c, y_c, r):
+    """!@brief Draw a circle using the polar speedup method.
+    @param[in] x_c The x-coordiante of the circle centre.
+    @param[in] y_c The y-coordiante of the circle centre.
+    @param[in] r The radius of the circle.
+    @since 0.0.1
+    """
+
+    vertices = []
+    d_theta = 1.0 / r
+    pi_4 = math.pi / float(4)
+    for theta in np.arange(0, pi_4, d_theta):
+        x = math.floor(r * math.cos(theta) + 0.5)
+        y = math.floor(r * math.sin(theta) + 0.5)
+        vertices += [x_c + x, y_c + y]
+        vertices += [x_c + x, y_c - y]
+        vertices += [x_c - x, y_c + y]
+        vertices += [x_c - x, y_c - y]
+        vertices += [x_c + y, y_c + x]
+        vertices += [x_c + y, y_c - x]
+        vertices += [x_c - y, y_c + x]
+        vertices += [x_c - y, y_c - x]
+
+    return vertices
+
+
 def draw_circle_midpoint(x_c, y_c, r):
     """!@brief Draw a circle using the midpoint algorithm.
     @param[in] x_c The x-coordiante of the circle centre.
@@ -131,6 +157,23 @@ def on_draw():
     circle_polar_enhancement = pyglet.graphics.vertex_list(int(len(vertices_polar_enhancement)/2), ('v2f', vertices_polar_enhancement))
     glColor3f(0, 1, 0)
     circle_polar_enhancement.draw(GL_POINTS)
+
+    # Draw circles using the polar speedup method
+    vertices_polar_speedup = []
+    begin = time.time()
+    for i in range(iterations):
+        vertices_polar_speedup = draw_circle_polar_speedup(x_c, y_c, r)
+    end = time.time()
+    print("Time to draw " + str(iterations) + " circles using the polar speedup method: " + str(end - begin))
+
+    # Drift the circle 320 pixels right to see all algorithms at the same time
+    for i in range(len(vertices_polar_speedup)):
+        if i % 2 == 0:
+            vertices_polar_speedup[i] = vertices_polar_speedup[i] + 320
+
+    circle_polar_speedup = pyglet.graphics.vertex_list(int(len(vertices_polar_speedup)/2), ('v2f', vertices_polar_speedup))
+    glColor3f(0, 1, 0)
+    circle_polar_speedup.draw(GL_POINTS)
 
     # Draw circles using the midpoint algorithm
     vertices_midpoint = []

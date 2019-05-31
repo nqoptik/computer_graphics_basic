@@ -85,6 +85,17 @@ void draw_circle_sqrt(int x_c, int y_c, int r, std::vector<Point2i>& vertices);
 void draw_circle_polar_enhancement(int x_c, int y_c, int r, std::vector<Point2i>& vertices);
 
 /**
+ * @brief Draw a circle using the polar speedup method.
+ * 
+ * @param[in] x_c The x-coordiante of the circle centre.
+ * @param[in] y_c The y-coordiante of the circle centre.
+ * @param[in] r The radius of the circle.
+ * @param[out] vertices The list of pixels need to be drawn.
+ * @since 0.0.1
+ */
+void draw_circle_polar_speedup(int x_c, int y_c, int r, std::vector<Point2i>& vertices);
+
+/**
  * @brief Draw a circle using the midpoint algorithm.
  * 
  * @param[in] x_c The x-coordiante of the circle centre.
@@ -161,6 +172,22 @@ void display() {
     }
     glEnd();
 
+    // Draw cirles using the polar speedup method
+    std::vector<Point2i> vertices_polar_speedup;
+    for (int i = 0; i < iterations; i++) {
+        draw_circle_polar_speedup(x_c, y_c, r, vertices_polar_speedup);
+    }
+
+    // Drift the circle 320 pixels right to see all algorithms at the same time
+    glColor3f(0.0f, 1.0f, 0.0f);
+    glBegin(GL_POINTS);
+    {
+        for (int i = 0; i < vertices_polar_speedup.size(); i++) {
+            glVertex2d(vertices_polar_speedup[i].x + 320, vertices_polar_speedup[i].y);
+        }
+    }
+    glEnd();
+
     // Draw cirles using the midpoint algorithm
     std::vector<Point2i> vertices_midpoint;
     for (int i = 0; i < iterations; i++) {
@@ -203,6 +230,23 @@ void draw_circle_polar_enhancement(int x_c, int y_c, int r, std::vector<Point2i>
         int x = x_c + std::round(r * cos(theta));
         int y = y_c + std::round(r * sin(theta));
         vertices.push_back(Point2i(x, y));
+    }
+}
+
+void draw_circle_polar_speedup(int x_c, int y_c, int r, std::vector<Point2i>& vertices) {
+    vertices.clear();
+    float d_theta = 1.0f / r;
+    for (float theta = 0; theta < M_PI_4; theta += d_theta) {
+        int x = std::round(r * cos(theta));
+        int y = std::round(r * sin(theta));
+        vertices.push_back(Point2i(x_c + x, y_c + y));
+        vertices.push_back(Point2i(x_c + x, y_c - y));
+        vertices.push_back(Point2i(x_c - x, y_c + y));
+        vertices.push_back(Point2i(x_c - x, y_c - y));
+        vertices.push_back(Point2i(x_c + y, y_c + x));
+        vertices.push_back(Point2i(x_c + y, y_c - x));
+        vertices.push_back(Point2i(x_c - y, y_c + x));
+        vertices.push_back(Point2i(x_c - y, y_c - x));
     }
 }
 

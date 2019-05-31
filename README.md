@@ -1,5 +1,5 @@
-# Computer graphics course at Hanoi University of Science and Technology
-Some small coding tasks along with the course.
+# Computer graphics basics
+Simple implementations of some basic algorithms in computer graphics.
 
 # Prerequisites
 OpenGL: to install OpenGL open terminal and type:
