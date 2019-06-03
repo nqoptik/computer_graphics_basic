@@ -25,7 +25,7 @@ struct Point2i {
     int y;
 
     /**
-     * @brief Construct a new Point 2i object.
+     * @brief Construct a new Point2i object.
      * 
      * @param[in] x The x-coordinate.
      * @param[in] y The y-coordinate.
@@ -62,7 +62,7 @@ void display();
 void timer(int ms);
 
 /**
- * @brief Draw a line using equation directly.
+ * @brief Draw a line using the equation directly.
  * 
  * @param[in] x_0 The x-coordiante of the first point.
  * @param[in] y_0 The y-coordiante of the first point.
@@ -74,7 +74,7 @@ void timer(int ms);
 void draw_line_equation(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>& vertices);
 
 /**
- * @brief Draw a line using DDA algorithm.
+ * @brief Draw a line using the DDA algorithm.
  * 
  * @param[in] x_0 The x-coordiante of the first point.
  * @param[in] y_0 The y-coordiante of the first point.
@@ -86,7 +86,7 @@ void draw_line_equation(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>
 void draw_line_dda(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>& vertices);
 
 /**
- * @brief Draw a line using Bresenham algorithm.
+ * @brief Draw a line using the Bresenham algorithm.
  * 
  * @param[in] x_0 The x-coordiante of the first point.
  * @param[in] y_0 The y-coordiante of the first point.
@@ -134,7 +134,7 @@ void display() {
     int iterations = 1000;
     struct timeval tv[6];
 
-    // Draw lines using equation directly
+    // Draw lines using the equation directly
     std::vector<Point2i> vertices_equation, vertices_equation_t;
     gettimeofday(&tv[0], NULL);
     for (int i = 0; i < iterations; i++) {
@@ -156,7 +156,7 @@ void display() {
     }
     glEnd();
 
-    // Draw lines using DDA algorithm
+    // Draw lines using the DDA algorithm
     std::vector<Point2i> vertices_dda, vertices_dda_t;
     gettimeofday(&tv[2], NULL);
     for (int i = 0; i < iterations; i++) {
@@ -178,7 +178,7 @@ void display() {
     }
     glEnd();
 
-    // Draw lines using Bresenham algorithm
+    // Draw lines using the Bresenham algorithm
     std::vector<Point2i> vertices_bresenham, vertices_bresenham_t;
     gettimeofday(&tv[4], NULL);
     for (int i = 0; i < iterations; i++) {

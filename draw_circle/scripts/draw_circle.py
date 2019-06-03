@@ -87,18 +87,14 @@ def draw_circle_midpoint(x_c, y_c, r):
     """
 
     vertices = []
-    p = float(5)/4 - r
+    p = 1 - r
     x = 0
     y = r
 
     vertices += [x_c + x, y_c + y]
-    vertices += [x_c + y, y_c + x]
-    vertices += [x_c + y, y_c - x]
     vertices += [x_c + x, y_c - y]
-    vertices += [x_c - x, y_c - y]
-    vertices += [x_c - y, y_c - x]
+    vertices += [x_c + y, y_c + x]
     vertices += [x_c - y, y_c + x]
-    vertices += [x_c - x, y_c + y]
 
     while x < y:
         if p < 0:
@@ -109,13 +105,13 @@ def draw_circle_midpoint(x_c, y_c, r):
 
         x = x + 1
         vertices += [x_c + x, y_c + y]
+        vertices += [x_c + x, y_c - y]
+        vertices += [x_c - x, y_c + y]
+        vertices += [x_c - x, y_c - y]
         vertices += [x_c + y, y_c + x]
         vertices += [x_c + y, y_c - x]
-        vertices += [x_c + x, y_c - y]
-        vertices += [x_c - x, y_c - y]
-        vertices += [x_c - y, y_c - x]
         vertices += [x_c - y, y_c + x]
-        vertices += [x_c - x, y_c + y]
+        vertices += [x_c - y, y_c - x]
 
     return vertices
 
@@ -137,7 +133,7 @@ def on_draw():
     end = time.time()
     print("Time to draw " + str(iterations) + " circles using the square root method: " + str(end - begin))
 
-    circle_sqrt = pyglet.graphics.vertex_list(int(len(vertices_sqrt)/2), ('v2f', vertices_sqrt))
+    circle_sqrt = pyglet.graphics.vertex_list(int(len(vertices_sqrt) / 2), ('v2f', vertices_sqrt))
     glColor3f(1, 0, 0)
     circle_sqrt.draw(GL_POINTS)
 
@@ -154,7 +150,7 @@ def on_draw():
         if i % 2 == 0:
             vertices_polar_enhancement[i] = vertices_polar_enhancement[i] + 300
 
-    circle_polar_enhancement = pyglet.graphics.vertex_list(int(len(vertices_polar_enhancement)/2), ('v2f', vertices_polar_enhancement))
+    circle_polar_enhancement = pyglet.graphics.vertex_list(int(len(vertices_polar_enhancement) / 2), ('v2f', vertices_polar_enhancement))
     glColor3f(0, 1, 0)
     circle_polar_enhancement.draw(GL_POINTS)
 
@@ -166,12 +162,12 @@ def on_draw():
     end = time.time()
     print("Time to draw " + str(iterations) + " circles using the polar speedup method: " + str(end - begin))
 
-    # Drift the circle 320 pixels right to see all algorithms at the same time
+    # Drift the circle 330 pixels right to see all algorithms at the same time
     for i in range(len(vertices_polar_speedup)):
         if i % 2 == 0:
-            vertices_polar_speedup[i] = vertices_polar_speedup[i] + 320
+            vertices_polar_speedup[i] = vertices_polar_speedup[i] + 330
 
-    circle_polar_speedup = pyglet.graphics.vertex_list(int(len(vertices_polar_speedup)/2), ('v2f', vertices_polar_speedup))
+    circle_polar_speedup = pyglet.graphics.vertex_list(int(len(vertices_polar_speedup) / 2), ('v2f', vertices_polar_speedup))
     glColor3f(0, 1, 0)
     circle_polar_speedup.draw(GL_POINTS)
 
@@ -190,7 +186,7 @@ def on_draw():
         else:
             vertices_midpoint[i] = vertices_midpoint[i] + 220
 
-    circle_midpoint = pyglet.graphics.vertex_list(int(len(vertices_midpoint)/2), ('v2f', vertices_midpoint))
+    circle_midpoint = pyglet.graphics.vertex_list(int(len(vertices_midpoint) / 2), ('v2f', vertices_midpoint))
     glColor3f(0, 0, 1)
     circle_midpoint.draw(GL_POINTS)
 

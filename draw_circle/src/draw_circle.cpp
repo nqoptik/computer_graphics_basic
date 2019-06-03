@@ -26,7 +26,7 @@ struct Point2i {
     int y;
 
     /**
-     * @brief Construct a new Point 2i object.
+     * @brief Construct a new Point2i object.
      * 
      * @param[in] x The x-coordinate.
      * @param[in] y The y-coordinate.
@@ -140,12 +140,15 @@ void display() {
     int y_c = 125;
     int r = 120;
     int iterations = 1000;
+    struct timeval tv[8];
 
     // Draw cirles using the square root method
     std::vector<Point2i> vertices_sqrt;
+    gettimeofday(&tv[0], NULL);
     for (int i = 0; i < iterations; i++) {
         draw_circle_sqrt(x_c, y_c, r, vertices_sqrt);
     }
+    gettimeofday(&tv[1], NULL);
 
     glColor3f(1.0f, 0.0f, 0.0f);
     glBegin(GL_POINTS);
@@ -158,9 +161,11 @@ void display() {
 
     // Draw cirles using the polar enhancement method
     std::vector<Point2i> vertices_polar_enhancement;
+    gettimeofday(&tv[2], NULL);
     for (int i = 0; i < iterations; i++) {
         draw_circle_polar_enhancement(x_c, y_c, r, vertices_polar_enhancement);
     }
+    gettimeofday(&tv[3], NULL);
 
     // Drift the circle 300 pixels right to see all algorithms at the same time
     glColor3f(0.0f, 1.0f, 0.0f);
@@ -174,25 +179,29 @@ void display() {
 
     // Draw cirles using the polar speedup method
     std::vector<Point2i> vertices_polar_speedup;
+    gettimeofday(&tv[4], NULL);
     for (int i = 0; i < iterations; i++) {
         draw_circle_polar_speedup(x_c, y_c, r, vertices_polar_speedup);
     }
+    gettimeofday(&tv[5], NULL);
 
-    // Drift the circle 320 pixels right to see all algorithms at the same time
+    // Drift the circle 330 pixels right to see all algorithms at the same time
     glColor3f(0.0f, 1.0f, 0.0f);
     glBegin(GL_POINTS);
     {
         for (int i = 0; i < vertices_polar_speedup.size(); i++) {
-            glVertex2d(vertices_polar_speedup[i].x + 320, vertices_polar_speedup[i].y);
+            glVertex2d(vertices_polar_speedup[i].x + 330, vertices_polar_speedup[i].y);
         }
     }
     glEnd();
 
     // Draw cirles using the midpoint algorithm
     std::vector<Point2i> vertices_midpoint;
+    gettimeofday(&tv[6], NULL);
     for (int i = 0; i < iterations; i++) {
         draw_circle_midpoint(x_c, y_c, r, vertices_midpoint);
     }
+    gettimeofday(&tv[7], NULL);
 
     // Drift the circle 150 pixels right and 220 pixel up to see all algorithms at the same time
     glColor3f(0.0f, 0.0f, 1.0f);
@@ -203,6 +212,14 @@ void display() {
         }
     }
     glEnd();
+
+    int time[4];
+    time[0] = (tv[1].tv_sec - tv[0].tv_sec) * 1e6 + (tv[1].tv_usec - tv[0].tv_usec);
+    time[1] = (tv[3].tv_sec - tv[2].tv_sec) * 1e6 + (tv[3].tv_usec - tv[2].tv_usec);
+    time[2] = (tv[5].tv_sec - tv[4].tv_sec) * 1e6 + (tv[5].tv_usec - tv[4].tv_usec);
+    time[3] = (tv[7].tv_sec - tv[6].tv_sec) * 1e6 + (tv[7].tv_usec - tv[6].tv_usec);
+
+    std::cout << "Time for sqrt->polar_enhancement->polar_speedup->midpoint: " << time[0] << "->" << time[1] << "->" << time[2] << "->" << time[3] << std::endl;
 
     glFlush();
 }
@@ -252,17 +269,13 @@ void draw_circle_polar_speedup(int x_c, int y_c, int r, std::vector<Point2i>& ve
 
 void draw_circle_midpoint(int x_c, int y_c, int r, std::vector<Point2i>& vertices) {
     vertices.clear();
-    float p = 5 / 4 - r;
+    int p = 1 - r;
     int x = 0;
     int y = r;
     vertices.push_back(Point2i(x_c + x, y_c + y));
-    vertices.push_back(Point2i(x_c + y, y_c + x));
-    vertices.push_back(Point2i(x_c + y, y_c - x));
     vertices.push_back(Point2i(x_c + x, y_c - y));
-    vertices.push_back(Point2i(x_c - x, y_c - y));
-    vertices.push_back(Point2i(x_c - y, y_c - x));
+    vertices.push_back(Point2i(x_c + y, y_c + x));
     vertices.push_back(Point2i(x_c - y, y_c + x));
-    vertices.push_back(Point2i(x_c - x, y_c + y));
 
     while (x < y) {
         if (p < 0) {
@@ -273,12 +286,12 @@ void draw_circle_midpoint(int x_c, int y_c, int r, std::vector<Point2i>& vertice
         }
         x = x + 1;
         vertices.push_back(Point2i(x_c + x, y_c + y));
+        vertices.push_back(Point2i(x_c + x, y_c - y));
+        vertices.push_back(Point2i(x_c - x, y_c + y));
+        vertices.push_back(Point2i(x_c - x, y_c - y));
         vertices.push_back(Point2i(x_c + y, y_c + x));
         vertices.push_back(Point2i(x_c + y, y_c - x));
-        vertices.push_back(Point2i(x_c + x, y_c - y));
-        vertices.push_back(Point2i(x_c - x, y_c - y));
-        vertices.push_back(Point2i(x_c - y, y_c - x));
         vertices.push_back(Point2i(x_c - y, y_c + x));
-        vertices.push_back(Point2i(x_c - x, y_c + y));
+        vertices.push_back(Point2i(x_c - y, y_c - x));
     }
 }
