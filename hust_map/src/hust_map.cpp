@@ -31,29 +31,29 @@ float angle_y = 0;
 float angle_step = M_PI / (120 - eye_step);
 
 GLuint load_texture(std::string file_name, int width, int height);
-void get_textures(void);
-void initialise(void);
-void display(void);
-void spin_display(void);
+void get_textures();
+void initialise();
+void display();
+void spin_display();
 void timer(int n);
 void reshape(int width, int height);
 void special(int key, int x, int y);
 void keyboard(unsigned char key, int x, int y);
 void mouse(int button, int state, int x, int y);
 
-void draw_ground(void);
-void draw_building(void);
-void draw_building_ground(void);
-void draw_building_trees(void);
-void draw_building_floor(void);
-void draw_hall_floor(void);
-void draw_rooms(void);
-void draw_back_porch(void);
-void draw_vestibule(void);
-void draw_vestibule_panes(void);
-void draw_vestibule_pillars(void);
+void draw_ground();
+void draw_building();
+void draw_building_ground();
+void draw_building_trees();
+void draw_building_floor();
+void draw_hall_floor();
+void draw_rooms();
+void draw_back_porch();
+void draw_vestibule();
+void draw_vestibule_panes();
+void draw_vestibule_pillars();
 void draw_stair_space();
-void draw_building_ceiling(void);
+void draw_building_ceiling();
 
 void up_to_down_square_face(float x, float z, float x_repeat, float z_repeat, int tex);
 void down_to_up_square_face(float x, float z, float x_repeat, float z_repeat, int tex);
@@ -68,35 +68,35 @@ void vertical_sphere(float radius, float xz_repeat, float y_repeat, int xz_split
 void horizonal_disk(float inner_radius, float outer_radius, float x_repeat, float z_repeat, int xz_split, int y_split, int tex);
 void partial_horizonal_disk(float inner_radius, float outer_radius, float start_angle, float sweep_angle, float x_repeat, float z_repeat, int xz_split, int y_split, int tex);
 
-void room_frame(void);
-void eaves(void);
-void corridor(void);
-void small_pillar(void);
-void big_pillar(void);
-void room_pillars(void);
-void left_front_handrail(void);
-void right_front_handrail(void);
-void edge_handrail(void);
-void window(void);
-void door(void);
+void room_frame();
+void eaves();
+void corridor();
+void small_pillar();
+void big_pillar();
+void room_pillars();
+void left_front_handrail();
+void right_front_handrail();
+void edge_handrail();
+void window();
+void door();
 void room(std::string type);
-void covered(void);
-void back_porch_pillars(void);
+void covered();
+void back_porch_pillars();
 
-void centre_ground(void);
-void centre_grass(void);
-void stone(void);
-void flags(void);
-void centre_small_trees(void);
-void centre_big_trees(void);
-void centre_trees(void);
-void dam(void);
+void centre_ground();
+void centre_grass();
+void stone();
+void flags();
+void centre_small_trees();
+void centre_big_trees();
+void centre_trees();
+void dam();
 void water_spout();
-void jet(void);
-void jets(void);
-void centre(void);
+void jet();
+void jets();
+void centre();
 
-void flag(void);
+void flag();
 void small_tree(float base_radius, float top_radius, float height, float radius, float rind_repeat, float xz_leaves_repeat, float y_leaves_repeat);
 void big_tree(float base_radius, float rind_height, float rind_repeat, float root_height, float radius, int canopy, float xz_leaves_repeat, float y_leaves_repeat, int tex);
 
@@ -157,7 +157,7 @@ GLuint load_texture(std::string file_name, int width, int height) {
     return texture;
 }
 
-void get_textures(void) {
+void get_textures() {
     textures[0] = load_texture("textures/grass2.bmp", 1296, 1296);
     textures[1] = load_texture("textures/dam.bmp", 479, 144);
     textures[2] = load_texture("textures/leaves.bmp", 500, 369);
@@ -189,12 +189,12 @@ void get_textures(void) {
     textures[28] = load_texture("textures/leaves3.bmp", 1600, 1600);
 }
 
-void initialise(void) {
+void initialise() {
     glClearColor(0.1, 0.6, 1.0, 0.0);
     glEnable(GL_DEPTH_TEST);
 }
 
-void display(void) {
+void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glPushMatrix();
@@ -214,7 +214,7 @@ void display(void) {
     glutSwapBuffers();
 }
 
-void spin_display(void) {
+void spin_display() {
     if (jet_enable == 1)
         blob_x += jet_speed;
 
@@ -415,7 +415,7 @@ void mouse(int button, int state, int x, int y) {
     glutPostRedisplay();
 }
 
-void draw_ground(void) {
+void draw_ground() {
     glPushMatrix();
     up_to_down_square_face(8000, 16500, 80, 165, 8);
     glPopMatrix();
@@ -436,7 +436,7 @@ void draw_ground(void) {
     glPopMatrix();
 }
 
-void draw_building(void) {
+void draw_building() {
     glPushMatrix();
     draw_building_ground();
     glPopMatrix();
@@ -479,7 +479,7 @@ void draw_building(void) {
     glPopMatrix();
 }
 
-void draw_building_ground(void) {
+void draw_building_ground() {
     glPushMatrix();
     glTranslatef(-1000, -230, -2000);
     outer_box(8000, 150, 3800, 160, 2.4, 76, 1, 1, 1, 1, 1, 24);
@@ -530,7 +530,7 @@ void draw_building_ground(void) {
     glPopMatrix();
 }
 
-void draw_building_trees(void) {
+void draw_building_trees() {
     glPushMatrix();
     glTranslatef(425, -70, 1275);
     big_tree(35, 800, 4, 200, 300, 6, 5, 2, 28);
@@ -552,7 +552,7 @@ void draw_building_trees(void) {
     glPopMatrix();
 }
 
-void draw_building_floor(void) {
+void draw_building_floor() {
     glPushMatrix();
     glTranslatef(0, -230, 0);
     outer_box(6000, 230, 600, 120, 4.6, 12, 12, 12, 12, 12, 1, 20);
@@ -591,7 +591,7 @@ void draw_building_floor(void) {
     }
 }
 
-void draw_hall_floor(void) {
+void draw_hall_floor() {
     glPushMatrix();
     outer_box(1400, 10, 1100, 28, 0.2, 22, 1, 1, 1, 1, 1, 20);
     glPopMatrix();
@@ -602,7 +602,7 @@ void draw_hall_floor(void) {
     glPopMatrix();
 }
 
-void draw_rooms(void) {
+void draw_rooms() {
     glPushMatrix();
     room("leftedge");
     glPopMatrix();
@@ -708,7 +708,7 @@ void draw_rooms(void) {
     glPopMatrix();
 }
 
-void draw_back_porch(void) {
+void draw_back_porch() {
     glPushMatrix();
     glTranslatef(0, 340, 0);
     outer_box(1400, 20, 1100, 28, 0.4, 22, 12, 12, 12, 12, 26, 20);
@@ -720,7 +720,7 @@ void draw_back_porch(void) {
     glPopMatrix();
 }
 
-void draw_vestibule(void) {
+void draw_vestibule() {
     glPushMatrix();
     glTranslated(0, 350, 0);
     draw_vestibule_panes();
@@ -736,7 +736,7 @@ void draw_vestibule(void) {
     covered();
     glPopMatrix();
 }
-void draw_vestibule_panes(void) {
+void draw_vestibule_panes() {
     glPushMatrix();
     outer_box(1200, 1050, 400, 24, 21, 8, 23, 23, 23, 23, 26, 23);
     glPopMatrix();
@@ -758,7 +758,7 @@ void draw_vestibule_panes(void) {
     glPopMatrix();
 }
 
-void draw_vestibule_pillars(void) {
+void draw_vestibule_pillars() {
     glPushMatrix();
     big_pillar();
     glPopMatrix();
@@ -789,7 +789,7 @@ void draw_stair_space() {
     glPopMatrix();
 }
 
-void draw_building_ceiling(void) {
+void draw_building_ceiling() {
     glPushMatrix();
     outer_box(6100, 20, 700, 122, 0.4, 14, 12, 12, 12, 12, 26, 23);
     glPopMatrix();
@@ -1061,7 +1061,7 @@ void partial_horizonal_disk(float inner_radius, float outer_radius, float start_
     glMatrixMode(GL_MODELVIEW);
 }
 
-void room_frame(void) {
+void room_frame() {
     glPushMatrix();
     outer_box(600, 350, 400, 12, 7, 8, 23, 23, 23, 25, 26, 23);
     glPopMatrix();
@@ -1072,31 +1072,31 @@ void room_frame(void) {
     glPopMatrix();
 }
 
-void eaves(void) {
+void eaves() {
     glPushMatrix();
     outer_box(600, 10, 200, 12, 0.2, 4, 12, 12, 12, 12, 26, 23);
     glPopMatrix();
 }
 
-void corridor(void) {
+void corridor() {
     glPushMatrix();
     outer_box(600, 10, 200, 12, 0.2, 4, 12, 12, 12, 12, 26, 20);
     glPopMatrix();
 }
 
-void small_pillar(void) {
+void small_pillar() {
     glPushMatrix();
     outer_box(30, 350, 30, 0.6, 7, 0.6, 12, 12, 12, 12, 12, 12);
     glPopMatrix();
 }
 
-void big_pillar(void) {
+void big_pillar() {
     glPushMatrix();
     outer_box(60, 350, 30, 1.2, 7, 0.6, 12, 12, 12, 12, 12, 12);
     glPopMatrix();
 }
 
-void room_pillars(void) {
+void room_pillars() {
     glPushMatrix();
     small_pillar();
     glPopMatrix();
@@ -1112,7 +1112,7 @@ void room_pillars(void) {
     glPopMatrix();
 }
 
-void left_front_handrail(void) {
+void left_front_handrail() {
     glPushMatrix();
     outer_box(290, 10, 10, 11.6, 0.2, 0.2, 6, 6, 6, 6, 6, 6);
     glPopMatrix();
@@ -1127,7 +1127,7 @@ void left_front_handrail(void) {
     glPopMatrix();
 }
 
-void right_front_handrail(void) {
+void right_front_handrail() {
     glPushMatrix();
     glTranslatef(290, 0, 0);
     outer_box(290, 10, 10, 11.6, 0.2, 0.2, 6, 6, 6, 6, 6, 6);
@@ -1143,7 +1143,7 @@ void right_front_handrail(void) {
     glPopMatrix();
 }
 
-void edge_handrail(void) {
+void edge_handrail() {
     glPushMatrix();
     outer_box(10, 10, 195, 0.2, 0.2, 3.9, 6, 6, 6, 6, 6, 6);
     glPopMatrix();
@@ -1156,7 +1156,7 @@ void edge_handrail(void) {
     }
 }
 
-void window(void) {
+void window() {
     glPushMatrix();
     front_to_back_square_face(460, 180, 2.5, 1, 16);
     glPopMatrix();
@@ -1177,7 +1177,7 @@ void window(void) {
     glPopMatrix();
 }
 
-void door(void) {
+void door() {
     glPushMatrix();
     front_to_back_square_face(120, 280, 1, 1, 17);
     glPopMatrix();
@@ -1249,13 +1249,13 @@ void room(std::string type) {
     glPopMatrix();
 }
 
-void covered(void) {
+void covered() {
     glPushMatrix();
     outer_box(1700, 20, 500, 34, 0.4, 10, 12, 12, 12, 12, 26, 20);
     glPopMatrix();
 }
 
-void back_porch_pillars(void) {
+void back_porch_pillars() {
     glPushMatrix();
     big_pillar();
     glPopMatrix();
@@ -1271,7 +1271,7 @@ void back_porch_pillars(void) {
     glPopMatrix();
 }
 
-void centre_ground(void) {
+void centre_ground() {
     glPushMatrix();
     outer_box(6400, 10, 10500, 128, 0.2, 210, 1, 1, 1, 1, 1, 24);
     glPopMatrix();
@@ -1316,7 +1316,7 @@ void centre_ground(void) {
     glPopMatrix();
 }
 
-void centre_grass(void) {
+void centre_grass() {
     glPushMatrix();
     glTranslatef(300, 10, 660);
     outer_box(2400, 10, 2400, 6, 0.025, 6, 0, 0, 0, 0, 0, 0);
@@ -1378,7 +1378,7 @@ void centre_grass(void) {
     glPopMatrix();
 }
 
-void stone(void) {
+void stone() {
     glPushMatrix();
     outer_box(480, 10, 250, 1.2, 0.025, 0.625, 0, 0, 0, 0, 0, 0);
     glPopMatrix();
@@ -1394,7 +1394,7 @@ void stone(void) {
     glPopMatrix();
 }
 
-void flags(void) {
+void flags() {
     glPushMatrix();
     for (int i = 0; i < 15; i++) {
         glPushMatrix();
@@ -1410,7 +1410,7 @@ void flags(void) {
     glPopMatrix();
 }
 
-void centre_small_trees(void) {
+void centre_small_trees() {
     glPushMatrix();
     for (int i = 0; i < 3; i++) {
         glPushMatrix();
@@ -1484,7 +1484,7 @@ void centre_small_trees(void) {
     glPopMatrix();
 }
 
-void centre_big_trees(void) {
+void centre_big_trees() {
     glPushMatrix();
     for (int i = 0; i < 2; i++) {
         glPushMatrix();
@@ -1527,14 +1527,14 @@ void centre_big_trees(void) {
     glPopMatrix();
 }
 
-void centre_trees(void) {
+void centre_trees() {
     glPushMatrix();
     centre_small_trees();
     centre_big_trees();
     glPopMatrix();
 }
 
-void dam(void) {
+void dam() {
     glPushMatrix();
     vertical_cylinder(750, 750, 100, 30 * M_PI, 1, 50, 1, 1);
     glPopMatrix();
@@ -1583,7 +1583,7 @@ void water_spout() {
     glPopMatrix();
 }
 
-void jet(void) {
+void jet() {
     glPushMatrix();
     for (int i = 0; i < 360; i += 15) {
         for (int j = 1; j < 500; j++) {
@@ -1617,13 +1617,13 @@ void jet(void) {
     glPopMatrix();
 }
 
-void jets(void) {
+void jets() {
     glPushMatrix();
     jet();
     glPopMatrix();
 }
 
-void centre(void) {
+void centre() {
     glPushMatrix();
     centre_ground();
     glPopMatrix();
@@ -1661,7 +1661,7 @@ void centre(void) {
     glPopMatrix();
 }
 
-void flag(void) {
+void flag() {
     glPushMatrix();
     vertical_cylinder(10, 5, 50, 1, 1, 30, 1, 7);
     glPopMatrix();
