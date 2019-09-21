@@ -1,4 +1,4 @@
-# Computer graphics basics
+# Computer graphics basic
 Simple implementations of some basic algorithms in computer graphics.
 
 # Prerequisites
