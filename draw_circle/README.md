@@ -19,6 +19,7 @@ python3 draw_circle.py
 Install OpenGL:
 ```
 sudo apt-get install freeglut3-dev
+sudo apt-get install libglew-dev
 ```
 
 ### Build the code

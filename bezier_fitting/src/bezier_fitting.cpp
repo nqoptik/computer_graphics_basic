@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
 
 #ifdef __linux__
 #include <GL/glut.h>
@@ -21,7 +21,8 @@ float X[20][20], Y[20][20];
 float x[4][27], y[4][27];
 float t;
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
     ImportingData();
     ComputePoints();
     glutInit(&argc, argv);
@@ -36,20 +37,28 @@ int main(int argc, char** argv) {
     return 1;
 }
 
-void ImportingData() {
+void ImportingData()
+{
     FILE* p;
     p = fopen("bezier_fitting.data", "r");
-    if (p == NULL) {
+    if (p == NULL)
+    {
         printf("Error");
-    } else {
-        if (fscanf(p, "%d\n", &n) < 1) {
+    }
+    else
+    {
+        if (fscanf(p, "%d\n", &n) < 1)
+        {
             printf("Failed to scan n.\n");
         }
-        for (int i = 0; i < n; i++) {
-            if (fscanf(p, "%f", &X[0][i]) < 1) {
+        for (int i = 0; i < n; i++)
+        {
+            if (fscanf(p, "%f", &X[0][i]) < 1)
+            {
                 printf("Failed to scan X[0][%d]", i);
             }
-            if (fscanf(p, "%f\n", &Y[0][i]) < 1) {
+            if (fscanf(p, "%f\n", &Y[0][i]) < 1)
+            {
                 printf("Failed to scan Y[0][%d]", i);
             }
         }
@@ -62,36 +71,53 @@ void ImportingData() {
     Mouse2[1] = 1000;
 }
 
-void ComputePoints() {
-    if (n <= 4) {
-        for (int i = 0; i < n; i++) {
+void ComputePoints()
+{
+    if (n <= 4)
+    {
+        for (int i = 0; i < n; i++)
+        {
             x[0][i] = X[0][i];
             y[0][i] = Y[0][i];
         }
-    } else {
-        for (int i = 0; i < 3; i++) {
+    }
+    else
+    {
+        for (int i = 0; i < 3; i++)
+        {
             x[0][i] = X[0][i];
             y[0][i] = Y[0][i];
         }
 
-        if (n % 2 == 0) {
-            for (int i = 3; i < n - 3 + n / 2; i++) {
-                if (i % 3 == 0) {
+        if (n % 2 == 0)
+        {
+            for (int i = 3; i < n - 3 + n / 2; i++)
+            {
+                if (i % 3 == 0)
+                {
                     x[0][i] = (X[0][2 * i / 3] + X[0][2 * i / 3 + 1]) / 2;
                     y[0][i] = (Y[0][2 * i / 3] + Y[0][2 * i / 3 + 1]) / 2;
-                } else {
+                }
+                else
+                {
                     x[0][i] = X[0][i - i / 3];
                     y[0][i] = Y[0][i - i / 3];
                 }
                 x[0][n - 3 + n / 2] = X[0][n - 1];
                 y[0][n - 3 + n / 2] = Y[0][n - 1];
             }
-        } else {
-            for (int i = 3; i < n - 2 + n / 2; i++) {
-                if (i % 3 == 0) {
+        }
+        else
+        {
+            for (int i = 3; i < n - 2 + n / 2; i++)
+            {
+                if (i % 3 == 0)
+                {
                     x[0][i] = (X[0][2 * i / 3] + X[0][2 * i / 3 + 1]) / 2;
                     y[0][i] = (Y[0][2 * i / 3] + Y[0][2 * i / 3 + 1]) / 2;
-                } else {
+                }
+                else
+                {
                     x[0][i] = X[0][i - i / 3];
                     y[0][i] = Y[0][i - i / 3];
                 }
@@ -104,7 +130,8 @@ void ComputePoints() {
     }
 }
 
-void Initial() {
+void Initial()
+{
     glClearColor(1.0, 1.0, 1.0, 0.0);
     glColor3f(1.0, 0.0, 0.0);
     glMatrixMode(GL_PROJECTION);
@@ -112,11 +139,13 @@ void Initial() {
     glOrtho(-684.0, 684.0, -348.0, 348.0, -1.0, 1.0);
 }
 
-void Bezier(void) {
+void Bezier(void)
+{
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.0, 0.0, 1.0);
 
-    for (int i = 0; i < n - 1; i++) {
+    for (int i = 0; i < n - 1; i++)
+    {
         glBegin(GL_LINES);
         {
             glVertex2d(X[0][i], Y[0][i]);
@@ -126,7 +155,8 @@ void Bezier(void) {
     }
 
     glPointSize(10.0);
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         glBegin(GL_POINTS);
         {
             glVertex2d(X[0][i], Y[0][i]);
@@ -135,9 +165,12 @@ void Bezier(void) {
     }
 
     glPointSize(3.0);
-    for (t = 1; t < Smooth; t++) {
-        for (int i = 1; i < n; i++) {
-            for (int j = 0; j < n - i; j++) {
+    for (t = 1; t < Smooth; t++)
+    {
+        for (int i = 1; i < n; i++)
+        {
+            for (int j = 0; j < n - i; j++)
+            {
                 X[i][j] = X[i - 1][j] + (X[i - 1][j + 1] - X[i - 1][j]) * t / Smooth;
                 Y[i][j] = Y[i - 1][j] + (Y[i - 1][j + 1] - Y[i - 1][j]) * t / Smooth;
             }
@@ -151,9 +184,12 @@ void Bezier(void) {
         glEnd();
 
         glColor3f(0.0, 0.0, 1.0);
-        if (n <= 4) {
-            for (int i = 1; i < n; i++) {
-                for (int j = 0; j < n - i; j++) {
+        if (n <= 4)
+        {
+            for (int i = 1; i < n; i++)
+            {
+                for (int j = 0; j < n - i; j++)
+                {
                     x[i][j] = x[i - 1][j] + (x[i - 1][j + 1] - x[i - 1][j]) * t / Smooth;
                     y[i][j] = y[i - 1][j] + (y[i - 1][j + 1] - y[i - 1][j]) * t / Smooth;
                 }
@@ -164,9 +200,13 @@ void Bezier(void) {
                 glVertex2d(x[n - 1][0], y[n - 1][0]);
             }
             glEnd();
-        } else {
-            for (int i = 1; i < 4; i++) {
-                for (int j = 0; j <= n - 2 + n / 2; j++) {
+        }
+        else
+        {
+            for (int i = 1; i < 4; i++)
+            {
+                for (int j = 0; j <= n - 2 + n / 2; j++)
+                {
                     x[i][j] = x[i - 1][j] + (x[i - 1][j + 1] - x[i - 1][j]) * t / Smooth;
                     y[i][j] = y[i - 1][j] + (y[i - 1][j + 1] - y[i - 1][j]) * t / Smooth;
                 }
@@ -174,7 +214,8 @@ void Bezier(void) {
 
             glBegin(GL_POINTS);
             {
-                for (int i = 0; i < (n - 1) / 2; i++) {
+                for (int i = 0; i < (n - 1) / 2; i++)
+                {
                     glVertex2d(x[3][3 * i], y[3][3 * i]);
                 }
             }
@@ -184,8 +225,10 @@ void Bezier(void) {
     glFlush();
 }
 
-void Mouse(int button, int state, int x, int y) {
-    if (button == 0) {
+void Mouse(int button, int state, int x, int y)
+{
+    if (button == 0)
+    {
         if (x > 1367)
             x = 1367;
         if (x < 0)
@@ -194,18 +237,24 @@ void Mouse(int button, int state, int x, int y) {
             y = 0;
         if (y > 695)
             y = 695;
-        if (state == 0) {
+        if (state == 0)
+        {
             Mouse1[0] = x - 683;
             Mouse1[1] = 347 - y;
-        } else {
+        }
+        else
+        {
             Mouse2[0] = x - 683;
             Mouse2[1] = 347 - y;
             Check = 1;
         }
 
-        if (((Mouse1[0] != Mouse2[0]) | (Mouse1[1] != Mouse2[1])) & (Check == 1)) {
-            for (int i = 0; i < n; i++) {
-                if ((fabs(Mouse1[0] - X[0][i]) < 10) & (fabs(Mouse1[1] - Y[0][i]) < 10)) {
+        if (((Mouse1[0] != Mouse2[0]) | (Mouse1[1] != Mouse2[1])) & (Check == 1))
+        {
+            for (int i = 0; i < n; i++)
+            {
+                if ((fabs(Mouse1[0] - X[0][i]) < 10) & (fabs(Mouse1[1] - Y[0][i]) < 10))
+                {
                     X[0][i] = Mouse2[0];
                     Y[0][i] = Mouse2[1];
                     WritingData();
@@ -223,14 +272,19 @@ void Mouse(int button, int state, int x, int y) {
     }
 }
 
-void WritingData() {
+void WritingData()
+{
     FILE* p;
     p = fopen("bezier_fitting.data", "w");
-    if (p == NULL) {
+    if (p == NULL)
+    {
         printf("Error");
-    } else {
+    }
+    else
+    {
         fprintf(p, "%d\n", n);
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             fprintf(p, "%6.0f %6.0f \n", X[0][i], Y[0][i]);
         }
         fclose(p);

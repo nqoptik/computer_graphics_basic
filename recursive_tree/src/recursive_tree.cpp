@@ -1,6 +1,6 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <unistd.h>
 
 #ifdef __linux__
@@ -16,15 +16,18 @@
 //---------------------------------------
 // Calculate random value between [-R..R]
 //---------------------------------------
-float myrand(float R) {
+float myrand(float R)
+{
     return (2 * R * rand()) / RAND_MAX - R;
 }
 
 //---------------------------------------
 // Recursive function to create trees
 //---------------------------------------
-void tree(float x1, float y1, float length1, float angle1, int depth) {
-    if (depth > 0) {
+void tree(float x1, float y1, float length1, float angle1, int depth)
+{
+    if (depth > 0)
+    {
         // Draw line segment
         float x2 = x1 + length1 * cos(angle1);
         float y2 = y1 + length1 * sin(angle1);
@@ -44,7 +47,8 @@ void tree(float x1, float y1, float length1, float angle1, int depth) {
 //---------------------------------------
 // Init function for OpenGL
 //---------------------------------------
-void init() {
+void init()
+{
     // Initialize OpenGL
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glMatrixMode(GL_PROJECTION);
@@ -56,7 +60,8 @@ void init() {
 //---------------------------------------
 // Display callback for OpenGL
 //---------------------------------------
-void display() {
+void display()
+{
     // Draw tree
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.0, 1.0, 0.0);
@@ -69,7 +74,8 @@ void display() {
 //---------------------------------------
 // Idle callback for OpenGL
 //---------------------------------------
-void idle() {
+void idle()
+{
     usleep(5000);
     glutPostRedisplay();
 }
@@ -77,7 +83,8 @@ void idle() {
 //---------------------------------------
 // Main program
 //---------------------------------------
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
     glutInit(&argc, argv);
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(100, 100);

@@ -8,11 +8,11 @@
  * 
  */
 
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <sys/time.h>
 #include <GL/glut.h>
+#include <algorithm>
+#include <iostream>
+#include <sys/time.h>
+#include <vector>
 
 /**
  * @brief A struct to store 2D integer points.
@@ -20,7 +20,8 @@
  * @since 0.0.1
  * 
  */
-struct Point2i {
+struct Point2i
+{
     int x;
     int y;
 
@@ -31,7 +32,8 @@ struct Point2i {
      * @param[in] y The y-coordinate.
      * @since 0.0.1
      */
-    Point2i(int x = 0, int y = 0) {
+    Point2i(int x = 0, int y = 0)
+    {
         this->x = x;
         this->y = y;
     }
@@ -105,7 +107,8 @@ void draw_line_bresenhame(int x_0, int y_0, int x_1, int y_1, std::vector<Point2
  * @return The status value.
  * @since 0.0.1
  */
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(640, 480);
@@ -118,14 +121,16 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-void initial() {
+void initial()
+{
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0, 640, 0, 480);
 }
 
-void display() {
+void display()
+{
     glClear(GL_COLOR_BUFFER_BIT);
     int x_0 = 460;
     int y_0 = 320;
@@ -137,7 +142,8 @@ void display() {
     // Draw lines using the equation directly
     std::vector<Point2i> vertices_equation, vertices_equation_t;
     gettimeofday(&tv[0], NULL);
-    for (int i = 0; i < iterations; i++) {
+    for (int i = 0; i < iterations; i++)
+    {
         draw_line_equation(x_0, y_0, x_1, y_1, vertices_equation);
         draw_line_equation(y_0, x_0, y_1, x_1, vertices_equation_t);
     }
@@ -147,10 +153,12 @@ void display() {
     glColor3f(1.0f, 0.0f, 0.0f);
     glBegin(GL_POINTS);
     {
-        for (int i = 0; i < vertices_equation.size(); i++) {
+        for (int i = 0; i < vertices_equation.size(); i++)
+        {
             glVertex2d(vertices_equation[i].x + 5, vertices_equation[i].y + 5);
         }
-        for (int i = 0; i < vertices_equation_t.size(); i++) {
+        for (int i = 0; i < vertices_equation_t.size(); i++)
+        {
             glVertex2d(vertices_equation_t[i].x + 5, vertices_equation_t[i].y + 5);
         }
     }
@@ -159,7 +167,8 @@ void display() {
     // Draw lines using the DDA algorithm
     std::vector<Point2i> vertices_dda, vertices_dda_t;
     gettimeofday(&tv[2], NULL);
-    for (int i = 0; i < iterations; i++) {
+    for (int i = 0; i < iterations; i++)
+    {
         draw_line_dda(x_0, y_0, x_1, y_1, vertices_dda);
         draw_line_dda(y_0, x_0, y_1, x_1, vertices_dda_t);
     }
@@ -169,10 +178,12 @@ void display() {
     glColor3f(0.0f, 1.0f, 0.0f);
     glBegin(GL_POINTS);
     {
-        for (int i = 0; i < vertices_dda.size(); i++) {
+        for (int i = 0; i < vertices_dda.size(); i++)
+        {
             glVertex2d(vertices_dda[i].x + 10, vertices_dda[i].y + 10);
         }
-        for (int i = 0; i < vertices_dda_t.size(); i++) {
+        for (int i = 0; i < vertices_dda_t.size(); i++)
+        {
             glVertex2d(vertices_dda_t[i].x + 10, vertices_dda_t[i].y + 10);
         }
     }
@@ -181,7 +192,8 @@ void display() {
     // Draw lines using the Bresenham algorithm
     std::vector<Point2i> vertices_bresenham, vertices_bresenham_t;
     gettimeofday(&tv[4], NULL);
-    for (int i = 0; i < iterations; i++) {
+    for (int i = 0; i < iterations; i++)
+    {
         draw_line_bresenhame(x_0, y_0, x_1, y_1, vertices_bresenham);
         draw_line_bresenhame(y_0, x_0, y_1, x_1, vertices_bresenham_t);
     }
@@ -191,10 +203,12 @@ void display() {
     glColor3f(0.0f, 0.0f, 1.0f);
     glBegin(GL_POINTS);
     {
-        for (int i = 0; i < vertices_bresenham.size(); i++) {
+        for (int i = 0; i < vertices_bresenham.size(); i++)
+        {
             glVertex2d(vertices_bresenham[i].x + 15, vertices_bresenham[i].y + 15);
         }
-        for (int i = 0; i < vertices_bresenham_t.size(); i++) {
+        for (int i = 0; i < vertices_bresenham_t.size(); i++)
+        {
             glVertex2d(vertices_bresenham_t[i].x + 15, vertices_bresenham_t[i].y + 15);
         }
     }
@@ -210,20 +224,27 @@ void display() {
     glFlush();
 }
 
-void timer(int ms) {
+void timer(int ms)
+{
     glutPostRedisplay();
     glutTimerFunc(ms, timer, ms);
 }
 
-void draw_line_equation(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>& vertices) {
+void draw_line_equation(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>& vertices)
+{
     vertices.clear();
-    if ((x_0 == x_1) and (y_0 == y_1)) {
+    if ((x_0 == x_1) and (y_0 == y_1))
+    {
         vertices.push_back(Point2i(x_0, y_0));
-    } else {
+    }
+    else
+    {
         int d_x = x_1 - x_0;
         int d_y = y_1 - y_0;
-        if (abs(d_x) >= abs(d_y)) {
-            if (x_0 > x_1) {
+        if (abs(d_x) >= abs(d_y))
+        {
+            if (x_0 > x_1)
+            {
                 // swap x_0 and x_1
                 int tmp = x_0;
                 x_0 = x_1;
@@ -236,12 +257,16 @@ void draw_line_equation(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>
             }
             float m = (float)d_y / d_x;
             float b = y_0 - m * x_0;
-            for (int x = x_0; x <= x_1; x++) {
+            for (int x = x_0; x <= x_1; x++)
+            {
                 int y = std::round(m * x + b);
                 vertices.push_back(Point2i(x, y));
             }
-        } else {
-            if (y_0 > y_1) {
+        }
+        else
+        {
+            if (y_0 > y_1)
+            {
                 // swap x_0 and x_1
                 int tmp = x_0;
                 x_0 = x_1;
@@ -254,7 +279,8 @@ void draw_line_equation(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>
             }
             float m = (float)d_x / d_y;
             float b = x_0 - m * y_0;
-            for (int y = y_0; y <= y_1; y++) {
+            for (int y = y_0; y <= y_1; y++)
+            {
                 int x = std::round(m * y + b);
                 vertices.push_back(Point2i(x, y));
             }
@@ -262,15 +288,21 @@ void draw_line_equation(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>
     }
 }
 
-void draw_line_dda(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>& vertices) {
+void draw_line_dda(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>& vertices)
+{
     vertices.clear();
-    if ((x_0 == x_1) && (y_0 == y_1)) {
+    if ((x_0 == x_1) && (y_0 == y_1))
+    {
         vertices.push_back(Point2i(x_0, y_0));
-    } else {
+    }
+    else
+    {
         int d_x = x_1 - x_0;
         int d_y = y_1 - y_0;
-        if (abs(d_x) >= abs(d_y)) {
-            if (x_0 > x_1) {
+        if (abs(d_x) >= abs(d_y))
+        {
+            if (x_0 > x_1)
+            {
                 // swap x_0 and x_1
                 int tmp = x_0;
                 x_0 = x_1;
@@ -284,13 +316,17 @@ void draw_line_dda(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>& ver
 
             float m = (float)d_y / d_x;
             float y = y_0;
-            for (int x = x_0; x <= x_1; x++) {
+            for (int x = x_0; x <= x_1; x++)
+            {
                 int round_y = std::round(y);
                 vertices.push_back(Point2i(x, round_y));
                 y = y + m;
             }
-        } else {
-            if (y_0 > y_1) {
+        }
+        else
+        {
+            if (y_0 > y_1)
+            {
                 // swap x_0 and x_1
                 int tmp = x_0;
                 x_0 = x_1;
@@ -304,7 +340,8 @@ void draw_line_dda(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>& ver
 
             float m = (float)d_x / d_y;
             float x = x_0;
-            for (int y = y_0; y <= y_1; y++) {
+            for (int y = y_0; y <= y_1; y++)
+            {
                 int round_x = std::round(x);
                 vertices.push_back(Point2i(round_x, y));
                 x = x + m;
@@ -313,10 +350,13 @@ void draw_line_dda(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>& ver
     }
 }
 
-void draw_line_bresenhame(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>& vertices) {
+void draw_line_bresenhame(int x_0, int y_0, int x_1, int y_1, std::vector<Point2i>& vertices)
+{
     vertices.clear();
-    if (abs(x_1 - x_0) > abs(y_1 - y_0)) {
-        if (x_0 > x_1) {
+    if (abs(x_1 - x_0) > abs(y_1 - y_0))
+    {
+        if (x_0 > x_1)
+        {
             // swap x_0 and x_1
             int tmp = x_0;
             x_0 = x_1;
@@ -330,31 +370,41 @@ void draw_line_bresenhame(int x_0, int y_0, int x_1, int y_1, std::vector<Point2
 
         int d_x = x_1 - x_0;
         int d_y = y_1 - y_0;
-        if (d_y > 0) {
+        if (d_y > 0)
+        {
             int p = 2 * d_y - d_x;
             int y = y_0;
-            for (int x = x_0; x <= x_1; x++) {
+            for (int x = x_0; x <= x_1; x++)
+            {
                 vertices.push_back(Point2i(x, y));
-                if (p > 0) {
+                if (p > 0)
+                {
                     y = y + 1;
                     p = p - 2 * d_x;
                 }
                 p = p + 2 * d_y;
             }
-        } else {
+        }
+        else
+        {
             int p = 2 * d_y + d_x;
             int y = y_0;
-            for (int x = x_0; x <= x_1; x++) {
+            for (int x = x_0; x <= x_1; x++)
+            {
                 vertices.push_back(Point2i(x, y));
-                if (p < 0) {
+                if (p < 0)
+                {
                     y = y - 1;
                     p = p + 2 * d_x;
                 }
                 p = p + 2 * d_y;
             }
         }
-    } else {
-        if (y_0 > y_1) {
+    }
+    else
+    {
+        if (y_0 > y_1)
+        {
             // swap x_0 and x_1
             int tmp = x_0;
             x_0 = x_1;
@@ -368,23 +418,30 @@ void draw_line_bresenhame(int x_0, int y_0, int x_1, int y_1, std::vector<Point2
 
         int d_x = x_1 - x_0;
         int d_y = y_1 - y_0;
-        if (d_x > 0) {
+        if (d_x > 0)
+        {
             int p = 2 * d_x - d_y;
             int x = x_0;
-            for (int y = y_0; y <= y_1; y++) {
+            for (int y = y_0; y <= y_1; y++)
+            {
                 vertices.push_back(Point2i(x, y));
-                if (p > 0) {
+                if (p > 0)
+                {
                     x = x + 1;
                     p = p - 2 * d_y;
                 }
                 p = p + 2 * d_x;
             }
-        } else {
+        }
+        else
+        {
             int p = 2 * d_x + d_y;
             int x = x_0;
-            for (int y = y_0; y <= y_1; y++) {
+            for (int y = y_0; y <= y_1; y++)
+            {
                 vertices.push_back(Point2i(x, y));
-                if (p < 0) {
+                if (p < 0)
+                {
                     x = x - 1;
                     p = p + 2 * d_y;
                 }
