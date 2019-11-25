@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """!@file draw_line.py
-@author Nguyen Quang <nguyenquang.emailbox@gmail.com>
+@author Nguyen Quang <nqoptik@gmail.com>
 @brief The line drawing algorithms in computer graphics.
 @since 0.0.1
 @copyright Copyright (c) 2015, Nguyen Quang, all rights reserved.

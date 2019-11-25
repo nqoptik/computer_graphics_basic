@@ -1,6 +1,6 @@
 /**
  * @file draw_circle.cpp
- * @author Nguyen Quang <nguyenquang.emailbox@gmail.com>
+ * @author Nguyen Quang <nqoptik@gmail.com>
  * @brief The circle drawing algorithms in computer graphics.
  * @since 0.0.1
  * 
