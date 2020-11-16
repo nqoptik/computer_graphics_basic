@@ -159,7 +159,7 @@ void display()
     glColor3f(1.0f, 0.0f, 0.0f);
     glBegin(GL_POINTS);
     {
-        for (int i = 0; i < vertices_sqrt.size(); i++)
+        for (size_t i = 0; i < vertices_sqrt.size(); i++)
         {
             glVertex2d(vertices_sqrt[i].x, vertices_sqrt[i].y);
         }
@@ -179,7 +179,7 @@ void display()
     glColor3f(0.0f, 1.0f, 0.0f);
     glBegin(GL_POINTS);
     {
-        for (int i = 0; i < vertices_polar_enhancement.size(); i++)
+        for (size_t i = 0; i < vertices_polar_enhancement.size(); i++)
         {
             glVertex2d(vertices_polar_enhancement[i].x + 300, vertices_polar_enhancement[i].y);
         }
@@ -199,7 +199,7 @@ void display()
     glColor3f(0.0f, 1.0f, 0.0f);
     glBegin(GL_POINTS);
     {
-        for (int i = 0; i < vertices_polar_speedup.size(); i++)
+        for (size_t i = 0; i < vertices_polar_speedup.size(); i++)
         {
             glVertex2d(vertices_polar_speedup[i].x + 330, vertices_polar_speedup[i].y);
         }
@@ -219,7 +219,7 @@ void display()
     glColor3f(0.0f, 0.0f, 1.0f);
     glBegin(GL_POINTS);
     {
-        for (int i = 0; i < vertices_midpoint.size(); i++)
+        for (size_t i = 0; i < vertices_midpoint.size(); i++)
         {
             glVertex2d(vertices_midpoint[i].x + 150, vertices_midpoint[i].y + 220);
         }

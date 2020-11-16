@@ -10,6 +10,7 @@
 
 #include <GL/glut.h>
 #include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <sys/time.h>
 #include <vector>
@@ -153,11 +154,11 @@ void display()
     glColor3f(1.0f, 0.0f, 0.0f);
     glBegin(GL_POINTS);
     {
-        for (int i = 0; i < vertices_equation.size(); i++)
+        for (size_t i = 0; i < vertices_equation.size(); i++)
         {
             glVertex2d(vertices_equation[i].x + 5, vertices_equation[i].y + 5);
         }
-        for (int i = 0; i < vertices_equation_t.size(); i++)
+        for (size_t i = 0; i < vertices_equation_t.size(); i++)
         {
             glVertex2d(vertices_equation_t[i].x + 5, vertices_equation_t[i].y + 5);
         }
@@ -178,11 +179,11 @@ void display()
     glColor3f(0.0f, 1.0f, 0.0f);
     glBegin(GL_POINTS);
     {
-        for (int i = 0; i < vertices_dda.size(); i++)
+        for (size_t i = 0; i < vertices_dda.size(); i++)
         {
             glVertex2d(vertices_dda[i].x + 10, vertices_dda[i].y + 10);
         }
-        for (int i = 0; i < vertices_dda_t.size(); i++)
+        for (size_t i = 0; i < vertices_dda_t.size(); i++)
         {
             glVertex2d(vertices_dda_t[i].x + 10, vertices_dda_t[i].y + 10);
         }
@@ -203,11 +204,11 @@ void display()
     glColor3f(0.0f, 0.0f, 1.0f);
     glBegin(GL_POINTS);
     {
-        for (int i = 0; i < vertices_bresenham.size(); i++)
+        for (size_t i = 0; i < vertices_bresenham.size(); i++)
         {
             glVertex2d(vertices_bresenham[i].x + 15, vertices_bresenham[i].y + 15);
         }
-        for (int i = 0; i < vertices_bresenham_t.size(); i++)
+        for (size_t i = 0; i < vertices_bresenham_t.size(); i++)
         {
             glVertex2d(vertices_bresenham_t[i].x + 15, vertices_bresenham_t[i].y + 15);
         }
